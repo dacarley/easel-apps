@@ -1,0 +1,93 @@
+{
+    "extends": [
+        "airbnb-base"
+    ],
+    "rules": {
+        "class-methods-use-this": "off",
+        "arrow-body-style": "off",
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "consistent-return": "off",
+        "default-case": "off",
+        "eol-last": "error",
+        "generator-star-spacing": "off",
+        "global-require": "off",
+        "import/extensions": "ignorePackages",
+        "import/no-dynamic-require": "off",
+        "import/no-extraneous-dependencies": "off",
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "key-spacing": [
+            "error",
+            {
+                "afterColon": true,
+                "beforeColon": false
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "after": true
+            }
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 150
+            }
+        ],
+        "new-cap": [
+            "error",
+            {
+                "capIsNew": false,
+                "newIsCap": true
+            }
+        ],
+        "newline-before-return": "error",
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 1,
+                "maxBOF": 0,
+                "maxEOF": 0
+            }
+        ],
+        "no-plusplus": "off",
+        "no-restricted-syntax": "off",
+        "no-shadow": "off",
+        "no-underscore-dangle": "off",
+        "no-unused-expressions": "off",
+        "no-unused-vars": [
+            "error",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "vars": "all"
+            }
+        ],
+        "no-use-before-define": [
+            "error",
+            {
+                "classes": true,
+                "functions": false
+            }
+        ],
+        "prefer-destructuring": "off",
+        "quotes": [
+            "error",
+            "double",
+            {
+                "allowTemplateLiterals": true,
+                "avoidEscape": true
+            }
+        ]
+    },
+    "globals": {}
+}
