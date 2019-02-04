@@ -11,6 +11,10 @@ const standardPropFields = [
 ];
 
 export default class EaselApp {
+    get executorDelay() {
+        return 250;
+    }
+
     propertiesWrapper(args) {
         const properties = this.properties(new EaselState(args));
 
@@ -21,29 +25,41 @@ export default class EaselApp {
     }
 
     executorWrapper(args, success, failure) {
-        try {
-            const state = new EaselState(args);
-            const props = this._getProps(args, state);
-
-            success(this.executor(state, props));
-        } catch (err) {
-            const message = err.message.startsWith(userMessagePrefix)
-                ? err.message.replace(userMessagePrefix, "").trim()
-                : err.stack;
-
-            failure(message);
+        if (this.lastTimeout) {
+            clearTimeout(this.lastTimeout);
         }
+
+        this.lastTimeout = setTimeout(() => {
+            try {
+                const state = new EaselState(args);
+                const props = this._processProps(args, state);
+
+                success(this.executor(state, props));
+            } catch (err) {
+                const message = err.message.startsWith(userMessagePrefix)
+                    ? err.message.replace(userMessagePrefix, "").trim()
+                    : err.stack;
+
+                failure(message);
+            }
+        }, this.executorDelay);
     }
 
     throwUserMessage(message) {
         throw new Error(`${userMessagePrefix}${message}`);
     }
 
-    _getProps(args, state) {
+    _processProps(args, state) {
         const properties = this.properties(state);
 
         return _.mapValues(properties, (property) => {
-            return args.params[property.label];
+            let value = args.params[property.label];
+
+            if (property.converter) {
+                value = property.converter(value);
+            }
+
+            return value;
         });
     }
 }

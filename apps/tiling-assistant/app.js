@@ -21,12 +21,12 @@ export default class App extends EaselApp {
             tileWidth: {
                 label: `Tile width (${state.preferredUnit})`,
                 type: "text",
-                convertTo: Number
+                converter: Number
             },
             tileHeight: {
                 label: `Tile height (${state.preferredUnit})`,
                 type: "text",
-                convertTo: Number
+                converter: Number
             },
             alignmentPins: {
                 label: `Alignment pins`,
