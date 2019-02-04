@@ -30,13 +30,15 @@ async function execute() {
 
         if (_.isEmpty(app.editProps)) {
             console.error("'editProps.cache.txt' is missing for this app.");
-            console.error(`Visit ${url}/edit to "save" your app, then copy and paste the Request Headers and Form Data sections into a file named "editProps.cache.txt" in the app's folder.`);
+            console.error(`Visit ${url}/edit, open Chrome's "inspector" tool, and clear the Network tab.`);
+            console.error(`Then, "save" your app.  The first entry in the Network tab will be POST to your app's number.`);
+            console.error(`Copy the Request Headers and Form Data sections from that request into a file named "editProps.cache.txt" in the app's folder.`);
 
             return;
         }
 
         const jar = request.jar();
-        const cookie = request.cookie(app.editProps.Cookie);
+        const cookie = request.cookie(getCookie(app));
         jar.setCookie(cookie, url);
 
         const params = {
@@ -58,6 +60,8 @@ async function execute() {
         const response = await request.post(params);
 
         if (response.statusCode !== 302) {
+            console.log("Failed to update the app's source.");
+            console.log("You may need to refresh the 'editProps.cache.txt' for this app.");
             console.log(_.pick(response, ["statusCode", "body"]));
             throw new Error("Unexpected status code");
         }
@@ -66,4 +70,16 @@ async function execute() {
     } catch (err) {
         console.log(err.stack);
     }
+}
+
+function getCookie(app) {
+    const cookiesText = app.editProps.Cookie;
+
+    const cookies = cookiesText.split("; ");
+
+    const cookiesByName = _(cookies)
+        .keyBy(cookie => cookie.split("=", 1)[0])
+        .value();
+
+    return cookiesByName._easel_session;
 }

@@ -3,6 +3,7 @@
         "airbnb-base"
     ],
     "rules": {
+        "no-console": "off",
         "class-methods-use-this": "off",
         "arrow-body-style": "off",
         "comma-dangle": [
