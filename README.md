@@ -1,8 +1,10 @@
 # easel-apps
 
-*Uses [Easel API Version 2.0](http://developer.easel.com/)*
-
 This is a set of "apps" for [Inventables Easel](http://http://easel.inventables.com/) carving software for the XCarve and other GRBL-based CNC machines.
+
+If you're interested in writing Easel apps of your own, have a look athe the [Inventables App Development forum](https://discuss.inventables.com/c/easel/app-development), and consider [registering to become a developer](http://goo.gl/forms/8RoPg8TfZ2112).
+
+*Uses [Easel API Version 2.0](http://developer.easel.com/)*
 
 ## Interesting related things
 
