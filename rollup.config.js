@@ -5,7 +5,8 @@ import { eslint } from "rollup-plugin-eslint";
 import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import root from "root-path";
-import appFinder from "./deploy/appFinder";
+
+const appFinder = require("./deploy/appFinder");
 
 const apps = appFinder.getApps();
 
@@ -13,7 +14,7 @@ module.exports = _.map(apps, app => defineApp(app.name));
 
 function defineApp(name) {
     return {
-        input: root(`apps/${name}/main.js`),
+        input: root(`apps/${name}/app.js`),
         output: {
             file: `dist/bundle-${name}.js`,
             format: "iife",
@@ -33,7 +34,10 @@ function defineApp(name) {
 `
         },
         plugins: [
-            eslint(),
+            eslint({
+                throwOnError: true,
+                throwOnWarning: true
+            }),
             nodeResolve({
                 jsnext: true,
                 browser: true

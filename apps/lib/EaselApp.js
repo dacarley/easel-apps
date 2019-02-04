@@ -2,13 +2,20 @@ import _ from "lodash";
 import EaselState from "./EaselState";
 
 const userMessagePrefix = "User Message: ";
+const standardPropFields = [
+    "type",
+    "options",
+    "min",
+    "max",
+    "value"
+];
 
 export default class EaselApp {
     propertiesWrapper(args) {
         const properties = this.properties(new EaselState(args));
 
         return _.map(properties, property => ({
-            ...property,
+            ..._.pick(property, standardPropFields),
             id: property.label
         }));
     }

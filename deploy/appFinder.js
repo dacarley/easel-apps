@@ -1,25 +1,25 @@
-import _ from "lodash";
-import fs from "fs";
-import glob from "glob";
-import root from "root-path";
+const _ = require("lodash");
+const fs = require("fs");
+const glob = require("glob");
+const root = require("root-path");
 
-export default {
+module.exports = {
     getApps,
 
     _loadEditProps
 };
 
 function getApps() {
-    const appJsonFilePaths = glob.sync(root("apps/**/app.json"));
+    const metaFilePaths = glob.sync(root("apps/**/meta.js"));
 
-    return _.map(appJsonFilePaths, (appJsonFilePath) => {
-        const [, name] = appJsonFilePath.match(/\/([^/]*)\/app.json/);
-        const appJson = JSON.parse(fs.readFileSync(appJsonFilePath));
+    return _.map(metaFilePaths, (metaFilePath) => {
+        const [, name] = metaFilePath.match(/\/([^/]*)\/meta.js/);
+        const meta = require(metaFilePath);
 
         const editProps = this._loadEditProps(name);
 
         return {
-            ...appJson,
+            meta,
             name,
             bundleFilePath: root(`dist/bundle-${name}.js`),
             editProps
