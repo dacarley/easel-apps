@@ -1,19 +1,21 @@
+import _ from "lodash";
 import commonJs from "rollup-plugin-commonjs";
 import nodeResolve from "rollup-plugin-node-resolve";
 import { eslint } from "rollup-plugin-eslint";
 import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
+import root from "root-path";
+import appFinder from "./deploy/appFinder";
 
-module.exports = [
-    defineApp("center-on-material"),
-    defineApp("tiling-assistant")
-];
+const apps = appFinder.getApps();
 
-function defineApp(appFolder) {
+module.exports = _.map(apps, app => defineApp(app.name));
+
+function defineApp(name) {
     return {
-        input: `${appFolder}/main.js`,
+        input: root(`apps/${name}/main.js`),
         output: {
-            file: `dist/bundle-${appFolder}.js`,
+            file: `dist/bundle-${name}.js`,
             format: "iife",
             name: "App",
             sourcemap: true,

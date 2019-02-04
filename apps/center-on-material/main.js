@@ -3,20 +3,20 @@ import utils from "../lib/utils";
 import EaselApp from "../lib/EaselApp";
 
 export default class App extends EaselApp {
-    properties() {
-        return [];
+    properties(_state) {
+        return {};
     }
 
-    executor(args) {
-        const volumes = _.isEmpty(args.selectedVolumes)
-            ? args.volumes
-            : args.selectedVolumes;
+    executor(state, _props) {
+        const volumes = _.isEmpty(state.selectedVolumes)
+            ? state.volumes
+            : state.selectedVolumes;
 
         const bounds = utils.calculateBounds(volumes);
 
         const centerOfMaterial = {
-            x: args.material.dimensions.x / 2,
-            y: args.material.dimensions.y / 2
+            x: state.material.dimensions.x / 2,
+            y: state.material.dimensions.y / 2
         };
 
         const dx = centerOfMaterial.x - ((bounds.x1 + bounds.x2) / 2);

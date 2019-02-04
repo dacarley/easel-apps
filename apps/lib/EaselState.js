@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-export default class EaselArgs {
+export default class EaselState {
     constructor(args) {
         this.args = args;
         this.memos = {};
@@ -12,6 +12,10 @@ export default class EaselArgs {
 
     get volumes() {
         return this.args.volumes;
+    }
+
+    get preferredUnit() {
+        return this.args.preferredUnit;
     }
 
     get selectedVolumes() {
